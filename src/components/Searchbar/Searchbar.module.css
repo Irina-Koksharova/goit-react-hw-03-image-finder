@@ -37,12 +37,3 @@
 .input:focus::placeholder {
   color: transparent;
 }
-
-.notify {
-  top: 150px;
-  right: 485px;
-  background-color: #8a648823;
-  font-size: 18px;
-  font-weight: 600;
-  color: #9b0633;
-}

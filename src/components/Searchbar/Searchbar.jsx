@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import s from './Searchbar.module.css';
 
 class SearchBar extends Component {
@@ -12,18 +12,16 @@ class SearchBar extends Component {
   };
 
   handleSubmitForm = e => {
-    e.preventDefault();
     const { searchQuery } = this.state;
+    const { notify, onSubmit } = this.props;
+    const clientError =
+      'Incorrect query! Please enter your request in the correct form';
+
+    e.preventDefault();
     if (searchQuery.trim() === '') {
-      toast.warn(
-        'Incorrect query! Please enter your request in the correct form.',
-        {
-          className: `${s.notify}`,
-        },
-      );
-      return;
+      notify(clientError);
     }
-    this.props.onSubmit(searchQuery);
+    onSubmit(searchQuery);
     this.resetForm();
   };
 
