@@ -1,8 +1,16 @@
 import { Component } from 'react';
+import Container from '../Container';
+import SearchBar from '../Searchbar';
+import ImageGallery from '../ImageGallery';
 
 class App extends Component {
   render() {
-    return <div>Hello!</div>;
+    return (
+      <Container>
+        <SearchBar></SearchBar>
+        <ImageGallery></ImageGallery>
+      </Container>
+    );
   }
 }
 
