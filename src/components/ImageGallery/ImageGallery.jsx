@@ -2,6 +2,7 @@ import { Component } from 'react';
 import s from './ImageGallery.module.css';
 import Spinner from '../Loader';
 import ImageGalleryItem from '../ImageGalleryItem';
+import Button from '../Button';
 
 class ImageGallery extends Component {
   state = {
@@ -13,11 +14,11 @@ class ImageGallery extends Component {
     const { searchQuery, notify } = this.props;
     const PUBLIC_URL = 'https://pixabay.com/api/';
     const KEY = '19018418-5cf416ff9d3b144c810bafa25';
-    const url = `${PUBLIC_URL}?q=${this.props.searchQuery}&page=1&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`;
+    const url = `${PUBLIC_URL}?q=${searchQuery}&page=1&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`;
     const clientError =
       'Sorry, the service cannot process your request😨. Try again, please';
     const serverError =
-      'Sorry, there are some technical problems 😱😱😱. Please try again later';
+      'Sorry, there are some technical problems 😱😱😱. Please, try again later';
 
     if (searchQuery !== prevProps.searchQuery) {
       this.setState({ status: 'pending' });
@@ -55,11 +56,14 @@ class ImageGallery extends Component {
 
     if (status === 'resolved') {
       return (
-        <ul className={s.list}>
-          {searchQuery.hits.map(({ id, webformatURL, tags }) => (
-            <ImageGalleryItem key={id} image={webformatURL} alt={tags} />
-          ))}
-        </ul>
+        <>
+          <ul className={s.list}>
+            {searchQuery.hits.map(({ id, webformatURL, tags }) => (
+              <ImageGalleryItem key={id} image={webformatURL} alt={tags} />
+            ))}
+          </ul>
+          <Button />
+        </>
       );
     }
   }

@@ -1,5 +1,4 @@
 import { Component } from 'react';
-// import { toast } from 'react-toastify';
 import s from './Searchbar.module.css';
 
 class SearchBar extends Component {

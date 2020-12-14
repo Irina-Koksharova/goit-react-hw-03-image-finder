@@ -22,11 +22,11 @@ class App extends Component {
   render() {
     return (
       <Container>
-        <SearchBar onSubmit={this.hadleSubmit} notify={this.notify}></SearchBar>
+        <SearchBar onSubmit={this.hadleSubmit} notify={this.notify} />
         <ImageGallery
           searchQuery={this.state.searchQuery}
           notify={this.notify}
-        ></ImageGallery>
+        />
         <ToastContainer autoClose={4500} style={{ width: '700px' }} />
       </Container>
     );
