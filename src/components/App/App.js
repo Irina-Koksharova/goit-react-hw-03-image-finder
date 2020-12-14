@@ -9,6 +9,7 @@ import ImageGallery from '../ImageGallery';
 class App extends Component {
   state = {
     searchQuery: '',
+    page: 1,
   };
 
   hadleSubmit = queryValue => {
@@ -20,11 +21,13 @@ class App extends Component {
   };
 
   render() {
+    const { searchQuery, page } = this.state;
     return (
       <Container>
         <SearchBar onSubmit={this.hadleSubmit} notify={this.notify} />
         <ImageGallery
-          searchQuery={this.state.searchQuery}
+          searchQuery={searchQuery}
+          page={page}
           notify={this.notify}
         />
         <ToastContainer autoClose={4500} style={{ width: '700px' }} />
