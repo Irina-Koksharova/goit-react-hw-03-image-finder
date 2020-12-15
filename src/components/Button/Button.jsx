@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Component } from 'react';
 import s from './Button.module.css';
 
@@ -15,5 +16,10 @@ class Button extends Component {
     );
   }
 }
+
+Button.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
+};
 
 export default Button;

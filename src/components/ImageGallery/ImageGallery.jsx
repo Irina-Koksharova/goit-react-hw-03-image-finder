@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Component } from 'react';
 import s from './ImageGallery.module.css';
 import Spinner from '../Loader';
@@ -141,5 +142,13 @@ class ImageGallery extends Component {
     }
   }
 }
+
+ImageGallery.propTypes = {
+  modalState: PropTypes.bool.isRequired,
+  onError: PropTypes.func.isRequired,
+  onToggleModal: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
+  searchQuery: PropTypes.string.isRequired,
+};
 
 export default ImageGallery;
