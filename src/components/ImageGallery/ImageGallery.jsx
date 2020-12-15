@@ -10,7 +10,8 @@ class ImageGallery extends Component {
     searchQuery: null,
     page: this.props.page,
     status: 'idle',
-    modalImage: null,
+    modalImageSrc: null,
+    modalImageAlt: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -85,12 +86,21 @@ class ImageGallery extends Component {
       const current = this.state.searchQuery.find(
         ({ id }) => id.toString() === e.target.id,
       );
-      this.setState({ modalImage: current.largeImageURL });
+      this.setState({
+        modalImageSrc: current.largeImageURL,
+        modalImageAlt: current.tags,
+      });
     }
   };
 
   render() {
-    const { searchQuery, status, page, modalImage } = this.state;
+    const {
+      searchQuery,
+      status,
+      page,
+      modalImageSrc,
+      modalImageAlt,
+    } = this.state;
     const { modalState, onToggleModal } = this.props;
 
     if (status === 'idle' || status === 'rejected') {
@@ -114,11 +124,17 @@ class ImageGallery extends Component {
               />
             ))}
           </ul>
+
           {modalState && (
             <Modal onClose={onToggleModal}>
-              <img className={s.image} src={modalImage} alt="" />
+              <img
+                className={s.image}
+                src={modalImageSrc}
+                alt={modalImageAlt}
+              />
             </Modal>
           )}
+
           <Button page={page} onClick={this.fetchQuery} />
         </>
       );

@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import { FiSearch } from 'react-icons/fi';
+import { IconContext } from 'react-icons';
 import s from './Searchbar.module.css';
 
 class SearchBar extends Component {
@@ -34,19 +36,24 @@ class SearchBar extends Component {
     return (
       <header className={s.container}>
         <form className={s.form} onSubmit={this.handleSubmitForm}>
-          <button type="submit" className={s.button}>
-            <span className="SearchForm-button-label">Search</span>
+          <button className={s.button} type="submit">
+            <IconContext.Provider value={{ className: `${s.reactIcons}` }}>
+              <FiSearch />
+            </IconContext.Provider>
           </button>
-          <input
-            className={s.input}
-            type="text"
-            name="searchQuery"
-            value={this.state.searchQuery}
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            onChange={this.handleChangeForm}
-          />
+
+          <label className={s.label}>
+            <input
+              className={s.input}
+              type="text"
+              name="searchQuery"
+              value={this.state.searchQuery}
+              autoComplete="off"
+              autoFocus
+              placeholder="Search images and photos"
+              onChange={this.handleChangeForm}
+            />
+          </label>
         </form>
       </header>
     );

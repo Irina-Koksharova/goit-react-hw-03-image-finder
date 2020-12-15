@@ -38,8 +38,8 @@ class App extends Component {
         <ImageGallery
           searchQuery={searchQuery}
           page={page}
-          onError={this.showNotification}
           modalState={showModal}
+          onError={this.showNotification}
           onToggleModal={this.toggleModal}
         />
         <ToastContainer autoClose={4500} style={{ width: '700px' }} />
