@@ -2,6 +2,7 @@ import { Component } from 'react';
 import s from './ImageGallery.module.css';
 import Spinner from '../Loader';
 import ImageGalleryItem from '../ImageGalleryItem';
+import Modal from '../Modal';
 import Button from '../Button';
 
 class ImageGallery extends Component {
@@ -9,6 +10,7 @@ class ImageGallery extends Component {
     searchQuery: null,
     page: this.props.page,
     status: 'idle',
+    modalImage: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -40,23 +42,15 @@ class ImageGallery extends Component {
           this.firstLoading(hits);
         } else {
           this.nextLoading(hits);
-          this.scrollTo();
         }
       })
       .catch(error => this.setStatusRejected(serverError));
   };
 
-  scrollTo = () => {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: 'smooth',
-    });
-  };
-
   setStatusRejected = message => {
-    const { notify } = this.props;
+    const { onError } = this.props;
     this.setState({ status: 'rejected' });
-    notify(message);
+    onError(message);
   };
 
   firstLoading = data => {
@@ -75,10 +69,29 @@ class ImageGallery extends Component {
         status: 'resolved',
       };
     });
+    this.scrollTo();
+  };
+
+  scrollTo = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth',
+    });
+  };
+
+  openModal = e => {
+    if (e.target.nodeName === 'IMG') {
+      this.props.onToggleModal();
+      const current = this.state.searchQuery.find(
+        ({ id }) => id.toString() === e.target.id,
+      );
+      this.setState({ modalImage: current.largeImageURL });
+    }
   };
 
   render() {
-    const { searchQuery, status, page } = this.state;
+    const { searchQuery, status, page, modalImage } = this.state;
+    const { modalState, onToggleModal } = this.props;
 
     if (status === 'idle' || status === 'rejected') {
       return <></>;
@@ -91,11 +104,21 @@ class ImageGallery extends Component {
     if (status === 'resolved') {
       return (
         <>
-          <ul className={s.list}>
+          <ul className={s.list} onClick={this.openModal}>
             {searchQuery.map(({ id, webformatURL, tags }) => (
-              <ImageGalleryItem key={id} image={webformatURL} alt={tags} />
+              <ImageGalleryItem
+                key={id}
+                image={webformatURL}
+                alt={tags}
+                id={id}
+              />
             ))}
           </ul>
+          {modalState && (
+            <Modal onClose={onToggleModal}>
+              <img className={s.image} src={modalImage} alt="" />
+            </Modal>
+          )}
           <Button page={page} onClick={this.fetchQuery} />
         </>
       );

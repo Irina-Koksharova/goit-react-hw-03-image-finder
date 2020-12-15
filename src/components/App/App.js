@@ -10,25 +10,37 @@ class App extends Component {
   state = {
     searchQuery: '',
     page: 1,
+    showModal: false,
   };
 
   hadleSubmit = queryValue => {
     this.setState({ searchQuery: queryValue.toLowerCase() });
   };
 
-  notify = message => {
+  showNotification = message => {
     toast.warn(message, { className: `${s.notify}` });
   };
 
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+  };
+
   render() {
-    const { searchQuery, page } = this.state;
+    const { searchQuery, page, showModal } = this.state;
     return (
       <Container>
-        <SearchBar onSubmit={this.hadleSubmit} notify={this.notify} />
+        <SearchBar
+          onSubmit={this.hadleSubmit}
+          onError={this.showNotification}
+        />
         <ImageGallery
           searchQuery={searchQuery}
           page={page}
-          notify={this.notify}
+          onError={this.showNotification}
+          modalState={showModal}
+          onToggleModal={this.toggleModal}
         />
         <ToastContainer autoClose={4500} style={{ width: '700px' }} />
       </Container>

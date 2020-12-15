@@ -12,13 +12,13 @@ class SearchBar extends Component {
 
   handleSubmitForm = e => {
     const { searchQuery } = this.state;
-    const { notify, onSubmit } = this.props;
+    const { onError, onSubmit } = this.props;
     const clientError =
       'Incorrect query! Please enter your request in the correct form';
 
     e.preventDefault();
     if (searchQuery.trim() === '') {
-      notify(clientError);
+      onError(clientError);
     }
     onSubmit(searchQuery);
     this.resetForm();
